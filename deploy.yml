@@ -1,0 +1,13 @@
+- hosts: web
+  become: yes
+
+  tasks:
+    - name: Pull latest Docker image
+      command: docker pull roei2212/simple-app:latest
+
+    - name: Stop old container if exists
+      command: docker rm -f simple-app
+      ignore_errors: yes
+
+    - name: Run new container
+      command: docker run -d -p 5000:5000 --name simple-app roei2212/simple-app:latest
